@@ -304,7 +304,7 @@
     }
     
     CGRect frame = CGRectMake(xOrigin, yOrigin, [self getContentSize].width,[self getContentSize].height);
-
+    
     //frame adjusting horizontally
     if (frame.origin.x < 0) {
         frame.origin.x = 0;
@@ -379,11 +379,9 @@
     
     [self paintBubble:context];
     
-#warning Review Here for border color
-    
-//    if (![_preferences.drawing.borderColor isEqual:[UIColor clearColor]] && _preferences.drawing.borderWidth) {
-//        [self drawBorderWithPath:contourPath andContext:context];
-//    }L
+    if (![_preferences.drawing.borderColor isEqual:[UIColor clearColor]] && _preferences.drawing.borderWidth) {
+        [self drawBorderWithPath:contourPath andContext:context];
+    }
 }
 
 
@@ -462,7 +460,7 @@
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [self addGestureRecognizer:tapGesture];
-
+    
     [superView addSubview:self];
     
     if (animated) {
@@ -479,9 +477,9 @@
     }
 }
 
-- (void)showWithText:(NSString *)text forView:(UIView *)view {
-    self.text = text;
-    [self showAnimated:YES forView:view withinSuperView:nil];
+- (void)showAnimated:(BOOL)animated forItem:(UIBarItem *)item withinSuperView:(UIView *)superView {
+    UIView *view  = item.view;
+    [self showAnimated:animated forView:view withinSuperView:superView];
 }
 
 @end

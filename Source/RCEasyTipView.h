@@ -77,8 +77,7 @@ typedef NS_ENUM(NSInteger, ArrowPosition){
 
 - (instancetype)initWithPreferences:(RCEasyTipPreferences *)preferences;
 
-- (void)showWithText:(NSString *)text forView:(UIView *)view;
-
+- (void)showAnimated:(BOOL)animated forItem:(UIBarItem *)item withinSuperView:(UIView *)superView;
 - (void)showAnimated:(BOOL)animated forView:(UIView *)view withinSuperView:(UIView *)superView;
 
 @end
