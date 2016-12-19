@@ -72,19 +72,74 @@ typedef NS_ENUM(NSInteger, ArrowPosition){
 
 @interface RCEasyTipView : UIView
 
+/**
+ Text to be displayed inside RCEasyTipView
+ */
 @property (nonatomic, strong) NSString *text;
+
+/**
+ Delegate for RCEasyTipView
+ */
 @property (nonatomic, weak) id<RCEasyTipViewDelegate>delegate;
 
+/**
+ Custom RCEasyTipPreferences initializer for RCEasyTipView
+ 
+ @param preferences RCEasyTipPreferences object full customized with provided properties
+ @return instancetype for RCEasyTipView
+ */
 - (instancetype)initWithPreferences:(RCEasyTipPreferences *)preferences;
 
+/**
+ Default initializer for RCEasyTipView
+ 
+ @param text Text to be displayed inside RCEasyTipView
+ @return instancetype for RCEasyTipView
+ */
+- (instancetype)initWithText:(NSString *)text;
+
+/**
+ Custom RCEasyTipPreferences initializer for RCEasyTipView with text to displayed inside RCEasyTipView
+ 
+ @param preferences RCEasyTipPreferences object full customized with provided properties
+ @param text Text to be displayed inside RCEasyTipView
+ @return instancetype for RCEasyTipView
+ */
+- (instancetype)initWithPreferences:(RCEasyTipPreferences *)preferences andText:(NSString *)text;
+
+/**
+ Presents an EasyTipView pointing to a particular UIBarItem instance within the specified superview
+ 
+ @param animated Pass true to animate the presentation.
+ @param item The UIBarButtonItem or UITabBarItem instance which the EasyTipView will be pointing to.
+ @param superView   A view which is part of the UIBarButtonItem instances superview hierarchy. Ignore this parameter in order to display the EasyTipView within the main window.
+ */
 - (void)showAnimated:(BOOL)animated forItem:(UIBarItem *)item withinSuperView:(UIView *)superView;
+
+/**
+ Presents an EasyTipView pointing to a particular UIView instance within the specified superview
+ 
+ @param animated  Pass true to animate the presentation.
+ @param view      The UIView instance which the EasyTipView will be pointing to.
+ @param superView A view which is part of the UIView instances superview hierarchy. Ignore this parameter in order to display the EasyTipView within the main window.
+ */
 - (void)showAnimated:(BOOL)animated forView:(UIView *)view withinSuperView:(UIView *)superView;
 
+/**
+ Dismisses the EasyTipView
+ 
+ @param completionBlock Completion block to be executed after the EasyTipView is dismissed.
+ */
+- (void)dismissWithCompletion:(void (^)())completionBlock;
 @end
 
 @protocol RCEasyTipViewDelegate <NSObject>
 @optional
 
+- (void)willShowTip:(RCEasyTipView *)tipView;
+- (void)didShowTip:(RCEasyTipView *)tipView;
+
+- (void)willDismissTip:(RCEasyTipView *)tipView;
 - (void)didDismissTip:(RCEasyTipView *)tipView;
 
 @end

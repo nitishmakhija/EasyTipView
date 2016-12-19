@@ -158,28 +158,29 @@
     return self;
 }
 
-- (instancetype)init {
+- (instancetype)initWithText:(NSString *)text {
     self = [super init];
     if(self) {
+        _text = text;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRotation) name:UIDeviceOrientationDidChangeNotification object:nil];
     }
     return self;
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+- (instancetype)initWithPreferences:(RCEasyTipPreferences *)preferences andText:(NSString *)text {
+    self = [super init];
+    if (self) {
+        _preferences = preferences;
+        _text = text;
+        self.backgroundColor = [UIColor clearColor];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRotation) name:UIDeviceOrientationDidChangeNotification object:nil];
+    }
+    return self;
 }
 
-- (void)handleRotation {
-    UIView *superView = self.superview;
-    if (superView) {
-        [UIView animateWithDuration:0.3f animations:^{
-            [self arrangeWithinSuperView:superView];
-            [self setNeedsDisplay];
-        }];
-    } else {
-        return;
-    }
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)arrangeWithinSuperView:(UIView *)superView {
@@ -242,41 +243,6 @@
     self.frame = frame;
 }
 
-- (void)handleTap:(UIGestureRecognizer *)geture {
-    if (geture.state == UIGestureRecognizerStateEnded) {
-        [self dismissWithCompletion:^{
-            //remove all the gsture here
-            [self removeGestureRecognizer:geture];
-        }];
-    }
-}
-
-- (void)dismissWithCompletion:(void (^)())completionBlock {
-    CGFloat damping = _preferences.animating.springDamping;
-    CGFloat velocity = _preferences.animating.springVelocity;
-    
-    [UIView animateWithDuration:_preferences.animating.dismissDuration
-                          delay:0
-         usingSpringWithDamping:damping
-          initialSpringVelocity:velocity
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         self.transform = _preferences.animating.dismissTransform;
-                         self.alpha = _preferences.animating.dismissFinalAlpha;
-                     }
-                     completion:^(BOOL finished) {
-                         if (completionBlock) {
-                             completionBlock();
-                         }
-                         if (_delegate && [_delegate respondsToSelector:@selector(didDismissTip:)]) {
-                             [_delegate didDismissTip:self];
-                         }
-                         [self removeFromSuperview];
-                         self.transform = CGAffineTransformIdentity;
-                     }];
-}
-
-
 - (CGRect)computeFrameWithPosition:(ArrowPosition)position referenceFrame:(CGRect)refViewFrame superViewFrame:(CGRect)superViewFrame {
     CGFloat xOrigin = 0;
     CGFloat yOrigin = 0;
@@ -322,6 +288,8 @@
     return frame;
 }
 
+#pragma mark - Helpers
+
 - (CGSize)getTextSize {
     NSDictionary *attributes = @{NSFontAttributeName:_preferences.drawing.font};
     
@@ -340,6 +308,12 @@
 - (CGSize)getContentSize {
     return CGSizeMake([self getTextSize].width + _preferences.positioning.textHInset * 2 + _preferences.positioning.bubbleHInset * 2, [self getTextSize].height + _preferences.positioning.textVInset * 2 + _preferences.positioning.bubbleVInset * 2 + _preferences.drawing.arrowHeight);
 }
+
+- (BOOL)isFrame:(CGRect)frame forReferenceViewFrame:(CGRect)refViewFrame {
+    return !CGRectIntersectsRect(frame,refViewFrame);
+}
+
+#pragma mark - Drawing
 
 - (void)drawBubbleWithFrame:(CGRect)bubbleFrame arrowPosition:(ArrowPosition)position andContext:(CGContextRef)context {
     CGFloat arrowWidth = _preferences.drawing.arrowWidth;
@@ -383,10 +357,11 @@
         [self drawBorderWithPath:contourPath andContext:context];
     }
 }
-
-
-- (BOOL)isFrame:(CGRect)frame forReferenceViewFrame:(CGRect)refViewFrame {
-    return !CGRectIntersectsRect(frame,refViewFrame);
+- (void)drawTopBubbleShapeWithFrame:(CGRect)frame cornerRadius:(CGFloat)radius path:(CGMutablePathRef)path {
+    CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x, frame.origin.y, frame.origin.x, frame.origin.y + frame.size.height, radius);
+    CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x, frame.origin.y + frame.size.height, frame.origin.x + frame.size.width, frame.origin.y + frame.size.height, radius);
+    CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x + frame.size.width, frame.origin.y + frame.size.height, frame.origin.x + frame.size.width, frame.origin.y, radius);
+    CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x + frame.size.width, frame.origin.y, frame.origin.x, frame.origin.y, radius);
 }
 
 - (void)drawBottomBubbleShapeWithFrame:(CGRect)frame cornerRadius:(CGFloat)radius path:(CGMutablePathRef)path {
@@ -396,11 +371,11 @@
     CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x + frame.size.width, frame.origin.y + frame.size.height, frame.origin.x, frame.origin.y + frame.size.height, radius);
 }
 
-- (void)drawTopBubbleShapeWithFrame:(CGRect)frame cornerRadius:(CGFloat)radius path:(CGMutablePathRef)path {
-    CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x, frame.origin.y, frame.origin.x, frame.origin.y + frame.size.height, radius);
-    CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x, frame.origin.y + frame.size.height, frame.origin.x + frame.size.width, frame.origin.y + frame.size.height, radius);
-    CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x + frame.size.width, frame.origin.y + frame.size.height, frame.origin.x + frame.size.width, frame.origin.y, radius);
-    CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x + frame.size.width, frame.origin.y, frame.origin.x, frame.origin.y, radius);
+- (void)drawLeftBubbleShapeWithFrame:(CGRect)frame cornerRadius:(CGFloat)radius path:(CGMutablePathRef)path {
+    CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x, frame.origin.y, frame.origin.x + frame.size.width, frame.origin.y, radius);
+    CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x + frame.size.width, frame.origin.y, frame.origin.x + frame.size.width, frame.origin.y + frame.size.height, radius);
+    CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x + frame.size.width, frame.origin.y + frame.size.height, frame.origin.x, frame.origin.y + frame.size.height, radius);
+    CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x, frame.origin.y + frame.size.height, frame.origin.x, frame.origin.y, radius);
 }
 
 - (void)drawRightBubbleShapeWithFrame:(CGRect)frame cornerRadius:(CGFloat)radius path:(CGMutablePathRef)path {
@@ -410,12 +385,6 @@
     CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x + frame.size.width, frame.origin.y + frame.size.height, frame.origin.x + frame.size.width, frame.origin.y + frame.size.height, radius);
 }
 
-- (void)drawLeftBubbleShapeWithFrame:(CGRect)frame cornerRadius:(CGFloat)radius path:(CGMutablePathRef)path {
-    CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x, frame.origin.y, frame.origin.x + frame.size.width, frame.origin.y, radius);
-    CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x + frame.size.width, frame.origin.y, frame.origin.x + frame.size.width, frame.origin.y + frame.size.height, radius);
-    CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x + frame.size.width, frame.origin.y + frame.size.height, frame.origin.x, frame.origin.y + frame.size.height, radius);
-    CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x, frame.origin.y + frame.size.height, frame.origin.x, frame.origin.y, radius);
-}
 
 - (void)paintBubble:(CGContextRef)context {
     CGContextSetFillColorWithColor(context, _preferences.drawing.backgroundColor.CGColor);
@@ -439,13 +408,35 @@
     [self.text drawInRect:textRect withAttributes:@{NSFontAttributeName:_preferences.drawing.font, NSForegroundColorAttributeName: _preferences.drawing.foregroundColor, NSParagraphStyleAttributeName: paragraphStyle}];
 }
 
+#pragma mark - Actions
+
+- (void)handleRotation {
+    UIView *superView = self.superview;
+    if (superView) {
+        [UIView animateWithDuration:0.3f animations:^{
+            [self arrangeWithinSuperView:superView];
+            [self setNeedsDisplay];
+        }];
+    } else {
+        return;
+    }
+}
+
+- (void)handleTap:(UIGestureRecognizer *)geture {
+    if (geture.state == UIGestureRecognizerStateEnded) {
+        [self dismissWithCompletion:^{
+            //remove all the gsture here
+            [self removeGestureRecognizer:geture];
+        }];
+    }
+}
+
 - (void)showAnimated:(BOOL)animated forView:(UIView *)view withinSuperView:(UIView *)superView {
     NSAssert(superView == nil || [view hasSuperView:superView], @"The supplied superview is not a direct nor an indirect superview of the supplied reference view. The superview passed to this method should be a direct or an indirect superview of the reference view. To display the tooltip within the main window, ignore the superview parameter.");
     
     if (!superView) {
         superView = [[[UIApplication sharedApplication] windows] firstObject];
     }
-    
     CGAffineTransform initialTransform = _preferences.animating.showInitialTransform;
     CGAffineTransform finalTransform = _preferences.animating.showFinalTransform;
     CGFloat initialAlpha = _preferences.animating.showInitialAlpha;
@@ -462,6 +453,9 @@
     [self addGestureRecognizer:tapGesture];
     
     [superView addSubview:self];
+    if (_delegate && [_delegate respondsToSelector:@selector(willShowTip:)]) {
+        [_delegate willShowTip:self];
+    }
     
     if (animated) {
         [UIView animateWithDuration:_preferences.animating.showDuration
@@ -473,13 +467,45 @@
                              self.transform = finalTransform;
                              self.alpha = 1;
                          }
-                         completion:^(BOOL finished) {}];
+                         completion:^(BOOL finished) {
+                             if (_delegate && [_delegate respondsToSelector:@selector(willShowTip:)]) {
+                                 [_delegate didShowTip:self];
+                             }
+                         }];
     }
 }
 
 - (void)showAnimated:(BOOL)animated forItem:(UIBarItem *)item withinSuperView:(UIView *)superView {
     UIView *view  = item.view;
     [self showAnimated:animated forView:view withinSuperView:superView];
+}
+
+- (void)dismissWithCompletion:(void (^)())completionBlock {
+    CGFloat damping = _preferences.animating.springDamping;
+    CGFloat velocity = _preferences.animating.springVelocity;
+    if (_delegate && [_delegate respondsToSelector:@selector(willDismissTip:)]) {
+        [_delegate willDismissTip:self];
+    }
+    
+    [UIView animateWithDuration:_preferences.animating.dismissDuration
+                          delay:0
+         usingSpringWithDamping:damping
+          initialSpringVelocity:velocity
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.transform = _preferences.animating.dismissTransform;
+                         self.alpha = _preferences.animating.dismissFinalAlpha;
+                     }
+                     completion:^(BOOL finished) {
+                         if (completionBlock) {
+                             completionBlock();
+                         }
+                         if (_delegate && [_delegate respondsToSelector:@selector(didDismissTip:)]) {
+                             [_delegate didDismissTip:self];
+                         }
+                         [self removeFromSuperview];
+                         self.transform = CGAffineTransformIdentity;
+                     }];
 }
 
 @end
