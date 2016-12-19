@@ -73,6 +73,11 @@ typedef NS_ENUM(NSInteger, ArrowPosition){
 @interface RCEasyTipView : UIView
 
 /**
+ Unique ID for Each RCEasyTipView
+ */
+@property (readonly, assign) NSInteger ID;
+
+/**
  Text to be displayed inside RCEasyTipView
  */
 @property (nonatomic, strong) NSString *text;

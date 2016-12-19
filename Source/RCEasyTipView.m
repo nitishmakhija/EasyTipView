@@ -9,6 +9,7 @@
 #import "RCEasyTipView.h"
 #import "UIView+RCEssentials.h"
 #import "UIBarItem+RCBarItem.h"
+#import "RCEasyTipViewIDGenerator.h"
 
 @interface RCEasyTipPreferences ()
 
@@ -457,6 +458,8 @@
         [_delegate willShowTip:self];
     }
     
+    _ID = [RCEasyTipViewIDGenerator getUniqueViewID];
+    
     if (animated) {
         [UIView animateWithDuration:_preferences.animating.showDuration
                               delay:0
@@ -468,7 +471,7 @@
                              self.alpha = 1;
                          }
                          completion:^(BOOL finished) {
-                             if (_delegate && [_delegate respondsToSelector:@selector(willShowTip:)]) {
+                             if (_delegate && [_delegate respondsToSelector:@selector(didShowTip:)]) {
                                  [_delegate didShowTip:self];
                              }
                          }];
