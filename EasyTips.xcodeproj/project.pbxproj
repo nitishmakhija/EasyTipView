@@ -1,0 +1,358 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		264869561E03BD0800CE4C69 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 264869551E03BD0800CE4C69 /* main.m */; };
+		264869591E03BD0800CE4C69 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 264869581E03BD0800CE4C69 /* AppDelegate.m */; };
+		2648695C1E03BD0800CE4C69 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2648695B1E03BD0800CE4C69 /* ViewController.m */; };
+		2648695F1E03BD0800CE4C69 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2648695D1E03BD0800CE4C69 /* Main.storyboard */; };
+		264869611E03BD0800CE4C69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 264869601E03BD0800CE4C69 /* Assets.xcassets */; };
+		264869641E03BD0800CE4C69 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 264869621E03BD0800CE4C69 /* LaunchScreen.storyboard */; };
+		2648696D1E03BE0C00CE4C69 /* UIBarItem+RCBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2648696C1E03BE0C00CE4C69 /* UIBarItem+RCBarItem.m */; };
+		264869701E03C39700CE4C69 /* UIView+RCEssentials.m in Sources */ = {isa = PBXBuildFile; fileRef = 2648696E1E03C39700CE4C69 /* UIView+RCEssentials.m */; };
+		264869741E03C5AF00CE4C69 /* RCEasyTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 264869731E03C5AF00CE4C69 /* RCEasyTipView.m */; };
+		266A99881E085EEB003FC733 /* RCEasyTipViewIDGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 266A99871E085EEB003FC733 /* RCEasyTipViewIDGenerator.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		264869511E03BD0800CE4C69 /* EasyTips.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EasyTips.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		264869551E03BD0800CE4C69 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		264869571E03BD0800CE4C69 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		264869581E03BD0800CE4C69 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2648695A1E03BD0800CE4C69 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		2648695B1E03BD0800CE4C69 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		2648695E1E03BD0800CE4C69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		264869601E03BD0800CE4C69 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		264869631E03BD0800CE4C69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		264869651E03BD0800CE4C69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2648696B1E03BE0C00CE4C69 /* UIBarItem+RCBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarItem+RCBarItem.h"; sourceTree = "<group>"; };
+		2648696C1E03BE0C00CE4C69 /* UIBarItem+RCBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarItem+RCBarItem.m"; sourceTree = "<group>"; };
+		2648696E1E03C39700CE4C69 /* UIView+RCEssentials.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RCEssentials.m"; sourceTree = "<group>"; };
+		2648696F1E03C39700CE4C69 /* UIView+RCEssentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RCEssentials.h"; sourceTree = "<group>"; };
+		264869721E03C5AF00CE4C69 /* RCEasyTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCEasyTipView.h; sourceTree = "<group>"; };
+		264869731E03C5AF00CE4C69 /* RCEasyTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCEasyTipView.m; sourceTree = "<group>"; };
+		266A99861E085EEB003FC733 /* RCEasyTipViewIDGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCEasyTipViewIDGenerator.h; sourceTree = "<group>"; };
+		266A99871E085EEB003FC733 /* RCEasyTipViewIDGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCEasyTipViewIDGenerator.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2648694E1E03BD0800CE4C69 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		264869481E03BD0800CE4C69 = {
+			isa = PBXGroup;
+			children = (
+				264869531E03BD0800CE4C69 /* EasyTips */,
+				264869521E03BD0800CE4C69 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		264869521E03BD0800CE4C69 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				264869511E03BD0800CE4C69 /* EasyTips.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		264869531E03BD0800CE4C69 /* EasyTips */ = {
+			isa = PBXGroup;
+			children = (
+				264869571E03BD0800CE4C69 /* AppDelegate.h */,
+				264869581E03BD0800CE4C69 /* AppDelegate.m */,
+				266A998A1E0863D6003FC733 /* Controlllers */,
+				266A99891E0863C5003FC733 /* RCEasyTipView */,
+				2648695D1E03BD0800CE4C69 /* Main.storyboard */,
+				264869601E03BD0800CE4C69 /* Assets.xcassets */,
+				264869621E03BD0800CE4C69 /* LaunchScreen.storyboard */,
+				264869651E03BD0800CE4C69 /* Info.plist */,
+				264869541E03BD0800CE4C69 /* Supporting Files */,
+			);
+			path = EasyTips;
+			sourceTree = "<group>";
+		};
+		264869541E03BD0800CE4C69 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				264869551E03BD0800CE4C69 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		266A99891E0863C5003FC733 /* RCEasyTipView */ = {
+			isa = PBXGroup;
+			children = (
+				264869721E03C5AF00CE4C69 /* RCEasyTipView.h */,
+				264869731E03C5AF00CE4C69 /* RCEasyTipView.m */,
+				2648696F1E03C39700CE4C69 /* UIView+RCEssentials.h */,
+				2648696E1E03C39700CE4C69 /* UIView+RCEssentials.m */,
+				2648696B1E03BE0C00CE4C69 /* UIBarItem+RCBarItem.h */,
+				2648696C1E03BE0C00CE4C69 /* UIBarItem+RCBarItem.m */,
+				266A99861E085EEB003FC733 /* RCEasyTipViewIDGenerator.h */,
+				266A99871E085EEB003FC733 /* RCEasyTipViewIDGenerator.m */,
+			);
+			name = RCEasyTipView;
+			sourceTree = "<group>";
+		};
+		266A998A1E0863D6003FC733 /* Controlllers */ = {
+			isa = PBXGroup;
+			children = (
+				2648695A1E03BD0800CE4C69 /* ViewController.h */,
+				2648695B1E03BD0800CE4C69 /* ViewController.m */,
+			);
+			name = Controlllers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		264869501E03BD0800CE4C69 /* EasyTips */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 264869681E03BD0800CE4C69 /* Build configuration list for PBXNativeTarget "EasyTips" */;
+			buildPhases = (
+				2648694D1E03BD0800CE4C69 /* Sources */,
+				2648694E1E03BD0800CE4C69 /* Frameworks */,
+				2648694F1E03BD0800CE4C69 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EasyTips;
+			productName = EasyTips;
+			productReference = 264869511E03BD0800CE4C69 /* EasyTips.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		264869491E03BD0800CE4C69 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = Roadcast;
+				TargetAttributes = {
+					264869501E03BD0800CE4C69 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = DNV3B8JE56;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 2648694C1E03BD0800CE4C69 /* Build configuration list for PBXProject "EasyTips" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 264869481E03BD0800CE4C69;
+			productRefGroup = 264869521E03BD0800CE4C69 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				264869501E03BD0800CE4C69 /* EasyTips */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2648694F1E03BD0800CE4C69 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				264869641E03BD0800CE4C69 /* LaunchScreen.storyboard in Resources */,
+				264869611E03BD0800CE4C69 /* Assets.xcassets in Resources */,
+				2648695F1E03BD0800CE4C69 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2648694D1E03BD0800CE4C69 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				266A99881E085EEB003FC733 /* RCEasyTipViewIDGenerator.m in Sources */,
+				2648695C1E03BD0800CE4C69 /* ViewController.m in Sources */,
+				264869591E03BD0800CE4C69 /* AppDelegate.m in Sources */,
+				2648696D1E03BE0C00CE4C69 /* UIBarItem+RCBarItem.m in Sources */,
+				264869561E03BD0800CE4C69 /* main.m in Sources */,
+				264869701E03C39700CE4C69 /* UIView+RCEssentials.m in Sources */,
+				264869741E03C5AF00CE4C69 /* RCEasyTipView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		2648695D1E03BD0800CE4C69 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2648695E1E03BD0800CE4C69 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		264869621E03BD0800CE4C69 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				264869631E03BD0800CE4C69 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		264869661E03BD0800CE4C69 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		264869671E03BD0800CE4C69 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		264869691E03BD0800CE4C69 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = DNV3B8JE56;
+				INFOPLIST_FILE = EasyTips/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = in.roadcast.EasyTips;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2648696A1E03BD0800CE4C69 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = DNV3B8JE56;
+				INFOPLIST_FILE = EasyTips/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = in.roadcast.EasyTips;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2648694C1E03BD0800CE4C69 /* Build configuration list for PBXProject "EasyTips" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				264869661E03BD0800CE4C69 /* Debug */,
+				264869671E03BD0800CE4C69 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		264869681E03BD0800CE4C69 /* Build configuration list for PBXNativeTarget "EasyTips" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				264869691E03BD0800CE4C69 /* Debug */,
+				2648696A1E03BD0800CE4C69 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 264869491E03BD0800CE4C69 /* Project object */;
+}
