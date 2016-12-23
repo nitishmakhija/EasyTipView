@@ -6,6 +6,8 @@ Description
 ```EasyTipView``` is a fully customisable support for ```EasyTipView``` written in Swift.
 (https://github.com/teodorpatras/EasyTipView)
 
+<img src="https://github.com/nitishmakhija/EasyTipView/blob/master/Assests/easytipview.gif" width="320">
+
 # Contents
 1. [Features](#features)
 2. [Installation](#installation)
