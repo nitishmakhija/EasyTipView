@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
         :git => 'https://github.com/nitishmakhija/EasyTipView.git',
         :tag => s.version
     }
-    s.source_files      = 'Source/*'
+    s.source_files      = 'Source/*.{h,m}'
     s.requires_arc      = true
 
 end
