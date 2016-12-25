@@ -127,6 +127,10 @@ This produces the following animations:
 @protocol RCEasyTipViewDelegate <NSObject>
 @optional
 
+- (void)willShowTip:(RCEasyTipView *)tipView;
+- (void)didShowTip:(RCEasyTipView *)tipView;
+
+- (void)willDismissTip:(RCEasyTipView *)tipView;
 - (void)didDismissTip:(RCEasyTipView *)tipView;
 
 @end
