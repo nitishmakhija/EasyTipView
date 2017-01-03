@@ -24,6 +24,11 @@ typedef NS_ENUM(NSInteger, ArrowPosition){
 @property (nonatomic, strong) RCEasyTipDrawing *drawing;
 @property (nonatomic, strong) RCEasyTipPositioning *positioning;
 @property (nonatomic, strong) RCEasyTipAnimating *animating;
+/**
+ Defaults to NO.
+ */
+@property (nonatomic, assign) BOOL shouldDismissOnTouchOutside;
+
 
 - (instancetype)initWithDefaultPreferences;
 

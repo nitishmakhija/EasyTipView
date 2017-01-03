@@ -103,6 +103,7 @@
 @property (nonatomic, strong) RCEasyTipPreferences *preferences;
 
 @property (nonatomic, weak) UIView *presentingView;
+@property (nonatomic, strong) UIView *dismissOverlay;
 @property (nonatomic, assign) CGPoint arrowTip;
 
 @end
@@ -454,6 +455,19 @@
     [self addGestureRecognizer:tapGesture];
     
     [superView addSubview:self];
+    
+    if (_preferences.shouldDismissOnTouchOutside) {
+        if (self.window) {
+            UIView *dismissOverLay = [[UIView alloc] initWithFrame:self.window.bounds];
+            dismissOverLay.alpha = 1;
+            dismissOverLay.userInteractionEnabled = YES;
+            [dismissOverLay addGestureRecognizer:tapGesture];
+            dismissOverLay.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+            [self.window addSubview:dismissOverLay];
+            _dismissOverlay = dismissOverLay;
+        }
+    }
+
     if (_delegate && [_delegate respondsToSelector:@selector(willShowTip:)]) {
         [_delegate willShowTip:self];
     }
