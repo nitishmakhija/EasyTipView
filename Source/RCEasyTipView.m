@@ -424,11 +424,12 @@
     }
 }
 
-- (void)handleTap:(UIGestureRecognizer *)geture {
-    if (geture.state == UIGestureRecognizerStateEnded) {
+- (void)handleTap:(UIGestureRecognizer *)gesture {
+    if (gesture.state == UIGestureRecognizerStateEnded) {
         [self dismissWithCompletion:^{
             //remove all the gsture here
-            [self removeGestureRecognizer:geture];
+            [self removeGestureRecognizer:gesture];
+            [_dismissOverlay removeGestureRecognizer:gesture];
         }];
     }
 }
@@ -459,7 +460,6 @@
     if (_preferences.shouldDismissOnTouchOutside) {
         if (self.window) {
             UIView *dismissOverLay = [[UIView alloc] initWithFrame:self.window.bounds];
-            dismissOverLay.alpha = 1;
             dismissOverLay.userInteractionEnabled = YES;
             [dismissOverLay addGestureRecognizer:tapGesture];
             dismissOverLay.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
@@ -467,7 +467,8 @@
             _dismissOverlay = dismissOverLay;
         }
     }
-
+    [self.window bringSubviewToFront:self];
+    
     if (_delegate && [_delegate respondsToSelector:@selector(willShowTip:)]) {
         [_delegate willShowTip:self];
     }
@@ -502,6 +503,9 @@
     CGFloat velocity = _preferences.animating.springVelocity;
     if (_delegate && [_delegate respondsToSelector:@selector(willDismissTip:)]) {
         [_delegate willDismissTip:self];
+    }
+    if (_dismissOverlay) {
+        [_dismissOverlay removeFromSuperview];
     }
     
     [UIView animateWithDuration:_preferences.animating.dismissDuration

@@ -103,6 +103,7 @@
 @property (nonatomic, strong) RCEasyTipPreferences *preferences;
 
 @property (nonatomic, weak) UIView *presentingView;
+@property (nonatomic, strong) UIView *dismissOverlay;
 @property (nonatomic, assign) CGPoint arrowTip;
 
 @end
@@ -423,11 +424,12 @@
     }
 }
 
-- (void)handleTap:(UIGestureRecognizer *)geture {
-    if (geture.state == UIGestureRecognizerStateEnded) {
+- (void)handleTap:(UIGestureRecognizer *)gesture {
+    if (gesture.state == UIGestureRecognizerStateEnded) {
         [self dismissWithCompletion:^{
             //remove all the gsture here
-            [self removeGestureRecognizer:geture];
+            [self removeGestureRecognizer:gesture];
+            [_dismissOverlay removeGestureRecognizer:gesture];
         }];
     }
 }
@@ -452,8 +454,21 @@
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [self addGestureRecognizer:tapGesture];
-
+    
     [superView addSubview:self];
+    
+    if (_preferences.shouldDismissOnTouchOutside) {
+        if (self.window) {
+            UIView *dismissOverLay = [[UIView alloc] initWithFrame:self.window.bounds];
+            dismissOverLay.userInteractionEnabled = YES;
+            [dismissOverLay addGestureRecognizer:tapGesture];
+            dismissOverLay.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+            [self.window addSubview:dismissOverLay];
+            _dismissOverlay = dismissOverLay;
+        }
+    }
+    [self.window bringSubviewToFront:self];
+    
     if (_delegate && [_delegate respondsToSelector:@selector(willShowTip:)]) {
         [_delegate willShowTip:self];
     }
@@ -489,7 +504,10 @@
     if (_delegate && [_delegate respondsToSelector:@selector(willDismissTip:)]) {
         [_delegate willDismissTip:self];
     }
-    
+    if (_dismissOverlay) {
+        [_dismissOverlay removeFromSuperview];
+    }
+
     [UIView animateWithDuration:_preferences.animating.dismissDuration
                           delay:0
          usingSpringWithDamping:damping

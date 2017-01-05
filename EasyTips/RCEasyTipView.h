@@ -24,6 +24,11 @@ typedef NS_ENUM(NSInteger, ArrowPosition){
 @property (nonatomic, strong) RCEasyTipDrawing *drawing;
 @property (nonatomic, strong) RCEasyTipPositioning *positioning;
 @property (nonatomic, strong) RCEasyTipAnimating *animating;
+/**
+ Defaults to NO.
+ */
+@property (nonatomic, assign) BOOL shouldDismissOnTouchOutside;
+
 
 - (instancetype)initWithDefaultPreferences;
 
@@ -89,7 +94,7 @@ typedef NS_ENUM(NSInteger, ArrowPosition){
 
 /**
  Custom RCEasyTipPreferences initializer for RCEasyTipView
-
+ 
  @param preferences RCEasyTipPreferences object full customized with provided properties
  @return instancetype for RCEasyTipView
  */
@@ -105,7 +110,7 @@ typedef NS_ENUM(NSInteger, ArrowPosition){
 
 /**
  Custom RCEasyTipPreferences initializer for RCEasyTipView with text to displayed inside RCEasyTipView
-
+ 
  @param preferences RCEasyTipPreferences object full customized with provided properties
  @param text Text to be displayed inside RCEasyTipView
  @return instancetype for RCEasyTipView
@@ -131,10 +136,10 @@ typedef NS_ENUM(NSInteger, ArrowPosition){
 - (void)showAnimated:(BOOL)animated forView:(UIView *)view withinSuperView:(UIView *)superView;
 
 /**
-    Dismisses the EasyTipView
-
-@param completionBlock Completion block to be executed after the EasyTipView is dismissed.
-*/
+ Dismisses the EasyTipView
+ 
+ @param completionBlock Completion block to be executed after the EasyTipView is dismissed.
+ */
 - (void)dismissWithCompletion:(void (^)())completionBlock;
 @end
 

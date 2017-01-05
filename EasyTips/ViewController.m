@@ -40,6 +40,7 @@
     preferences.animating.dismissDuration = 1.5;
     preferences.animating.dismissTransform = CGAffineTransformMakeTranslation(0, 100);
     preferences.animating.showInitialTransform = CGAffineTransformMakeTranslation(0, -100);
+    preferences.shouldDismissOnTouchOutside = YES;
     
     RCEasyTipView *tipView = [[RCEasyTipView alloc] initWithPreferences:preferences];
     tipView.text = @"EasyTipView is an easy to use tooltip view. It can point to any UIView or UIBarItem subclasses. Tap the buttons to see other tooltips.";
