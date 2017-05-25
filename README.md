@@ -18,17 +18,17 @@ Description
 
 ##<a name="features"> Features </a>
 
-- [x] Can be shown pointing to any ``UIBarItem`` or ``UIView`` subclass.
-- [x] support for any arrow direction `←, →, ↑, ↓`
-- [x] Automatic orientation change adjustments.
-- [x] Fully customisable appearance.
-- [x] Fully customisable presentation and dismissal animations.
+-  Can be shown pointing to any ``UIBarItem`` or ``UIView`` subclass.
+-  support for any arrow direction `←, →, ↑, ↓`
+-  Automatic orientation change adjustments.
+-  Fully customisable appearance.
+-  Fully customisable presentation and dismissal animations.
 
 
 <a name="installation"> Installation </a>
 --------------
 
-### Manually
+# Manually
 
 Drag drop Source folder in your project
 
@@ -61,7 +61,6 @@ Drag drop Source folder in your project
 
 ```
 <a name="customising"> Customising the appearance </a>
---------------
 In order to customise the `EasyTipView` appearance and behaviour, you can play with the `Preferences` structure which encapsulates all the customizable properties of the ``EasyTipView``. These preferences have been split into three structures:
 * ```Drawing``` - encapsulates customisable properties specifying how ```EastTipView``` will be drawn on screen.
 * ```Positioning``` - encapsulates customisable properties specifying where ```EasyTipView``` will be drawn within its own bounds.
@@ -119,7 +118,7 @@ This produces the following animations:
 <a name="public-interface"> Public interface </a>
 --------------
 
-###Delegate
+#Delegate
 `EasyTipViewDelegate` is a custom protocol which defines one method to be called on the delegate after the ``EasyTipView`` has been dismissed.
 
 ```objc
