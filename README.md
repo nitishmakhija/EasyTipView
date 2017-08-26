@@ -32,6 +32,12 @@ Description
 
 Drag drop Source folder in your project
 
+# Pods
+
+target 'MyApp' do
+  pod 'NMEasyTipView', '~> 1.0'
+end
+
 <a name="usage"> Usage </a>
 --------------
 
