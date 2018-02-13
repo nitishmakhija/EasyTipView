@@ -10,7 +10,7 @@ Objective-C alternative for EasyTipView implemented swift.
   s.homepage         = 'https://github.com/nitishmakhija/EasyTipView'
   s.license          = { :type => 'MIT', :file => 'License.md' }
   s.author           = { 'Nitish Makhija' => 'nitishmakhija@gmail.com' }
-  s.source           = { :git => 'https://github.com/nitishmakhija/EasyTipView.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/nitishmakhija/EasyTipView.git', :tag => '1.1' }
 
   s.ios.deployment_target = '8.0'
   s.source_files = 'Source/*'
