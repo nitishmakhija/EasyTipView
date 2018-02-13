@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'NMEasyTipView'
-  s.version          = '1.0'
+  s.version          = '1.1'
   s.summary          = 'Fully customisable tooltip view for iOS.'
 
   s.description      = <<-DESC
