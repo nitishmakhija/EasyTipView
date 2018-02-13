@@ -3,7 +3,6 @@
 //  EasyTips
 //
 //  Created by Nitish Makhija on 16/12/16.
-//  Copyright © 2016 Roadcast. All rights reserved.
 //
 
 #import "RCEasyTipView.h"
@@ -43,7 +42,7 @@
         _arrowWidth = 10;
         _foregroundColor = [UIColor whiteColor];
         _backgroundColor = [UIColor redColor];
-        _arrowPostion = Any;
+        _arrowPostion = Left;
         _textAlignment = NSTextAlignmentCenter;
         _borderWidth = 0;
         _borderColor = [UIColor clearColor];
@@ -105,6 +104,7 @@
 @property (nonatomic, weak) UIView *presentingView;
 @property (nonatomic, strong) UIView *dismissOverlay;
 @property (nonatomic, assign) CGPoint arrowTip;
+@property (nonatomic, weak) UIView *parentView;
 
 @end
 
@@ -155,7 +155,7 @@
     if (self) {
         _preferences = preferences;
         self.backgroundColor = [UIColor clearColor];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRotation) name:UIDeviceOrientationDidChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRotation:) name:UIDeviceOrientationDidChangeNotification object:nil];
     }
     return self;
 }
@@ -164,7 +164,7 @@
     self = [super init];
     if(self) {
         _text = text;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRotation) name:UIDeviceOrientationDidChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRotation:) name:UIDeviceOrientationDidChangeNotification object:nil];
     }
     return self;
 }
@@ -175,7 +175,7 @@
         _preferences = preferences;
         _text = text;
         self.backgroundColor = [UIColor clearColor];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRotation) name:UIDeviceOrientationDidChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRotation:) name:UIDeviceOrientationDidChangeNotification object:nil];
     }
     return self;
 }
@@ -185,19 +185,26 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)arrangeWithinSuperView:(UIView *)superView {
+- (void)arrangeWithinSuperView:(UIView *)superView shouldUpdateWidth:(BOOL)updateWidth {
     ArrowPosition position = _preferences.drawing.arrowPostion;
     
     CGRect refViewFrame = [self.presentingView convertRect:self.presentingView.bounds toCoordinateSpace:superView];
     
-    CGRect superViewFrame;
+    CGRect superViewFrame = superView.frame;
+    //Fix for safeArea
+    if (@available(iOS 11.0, *)) {
+        superViewFrame = UIEdgeInsetsInsetRect(superViewFrame, superView.safeAreaInsets);
+        if (updateWidth) {
+            superViewFrame.size.width += superView.safeAreaInsets.right;
+        } else {
+            superViewFrame.size.height += superView.safeAreaInsets.bottom;
+        }
+    }
     
     if ([superView isKindOfClass:[UIScrollView class]]) {
         UIScrollView *scrollView = (UIScrollView *)superView;
         superViewFrame.origin = scrollView.frame.origin;
         superViewFrame.size = scrollView.contentSize;
-    } else {
-        superViewFrame = superView.frame;
     }
     
     CGRect frame = [self computeFrameWithPosition:position referenceFrame:refViewFrame superViewFrame:superViewFrame];
@@ -205,20 +212,19 @@
     
     if (![self isFrame:frame forReferenceViewFrame:refViewFrame]) {
         for (NSNumber *value in allValues) {
-            if (![value isEqualToNumber:[NSNumber numberWithInteger:position]]) {
-                CGRect newFrame = [self computeFrameWithPosition:value.integerValue referenceFrame:refViewFrame superViewFrame:superViewFrame];
-                if ([self isFrame:newFrame forReferenceViewFrame:refViewFrame]) {
-                    if (position != Any) {
-                        NSLog(@"[EasyTipView - Info] The arrow position you chose <\(position)> could not be applied. Instead, position <\(value)> has been applied! Please specify position <\(ArrowPosition.any)> if you want EasyTipView to choose a position for you.");
-                    }
-                    frame = newFrame;
-                    position = value.integerValue;
-                    _preferences.drawing.arrowPostion = value.integerValue;
-                    break;
+            CGRect newFrame = [self computeFrameWithPosition:value.integerValue referenceFrame:refViewFrame superViewFrame:superViewFrame];
+            if ([self isFrame:newFrame forReferenceViewFrame:refViewFrame]) {
+                if (position != Any) {
+                    NSLog(@"[EasyTipView - Info] The arrow position you chose %ld could not be applied. Instead, position <\(value)> has been applied! Please specify position ANY if you want EasyTipView to choose a position for you.", position);
                 }
+                frame = newFrame;
+                position = value.integerValue;
+                _preferences.drawing.arrowPostion = value.integerValue;
+                break;
             }
         }
     }
+    
     CGFloat arrowTipXOrigin;
     switch (position) {
         case Any:
@@ -266,7 +272,7 @@
             yOrigin = center.y - [self getContentSize].height / 2;
             break;
         case Left:
-            xOrigin = refViewFrame.origin.x + [self getContentSize].width;
+            xOrigin = refViewFrame.origin.x + refViewFrame.size.width;
             yOrigin = refViewFrame.origin.y - [self getContentSize].height / 2;
             break;
     }
@@ -274,15 +280,15 @@
     CGRect frame = CGRectMake(xOrigin, yOrigin, [self getContentSize].width,[self getContentSize].height);
     
     //frame adjusting horizontally
-    if (frame.origin.x < 0) {
-        frame.origin.x = 0;
+    if (frame.origin.x < superViewFrame.origin.x) {
+        frame.origin.x = superViewFrame.origin.x;
     } else if (CGRectGetMaxX(frame) > superViewFrame.size.width) {
         frame.origin.x = superViewFrame.size.width - frame.size.width;
     }
     
     //frame adjusting vertically
-    if (frame.origin.y < 0) {
-        frame.origin.y = 0;
+    if (frame.origin.y < superViewFrame.origin.y) {
+        frame.origin.y = superViewFrame.origin.y;
     } else if (CGRectGetMaxY(frame) > CGRectGetMaxY(superViewFrame)) {
         frame.origin.y = superViewFrame.size.height - frame.size.height;
     }
@@ -358,7 +364,7 @@
     if (![_preferences.drawing.borderColor isEqual:[UIColor clearColor]] && _preferences.drawing.borderWidth) {
         [self drawBorderWithPath:contourPath andContext:context];
     }
-  
+    
     CGPathRelease(contourPath);
 }
 - (void)drawTopBubbleShapeWithFrame:(CGRect)frame cornerRadius:(CGFloat)radius path:(CGMutablePathRef)path {
@@ -414,11 +420,11 @@
 
 #pragma mark - Actions
 
-- (void)handleRotation {
+- (void)handleRotation:(NSNotification *)notification {
     UIView *superView = self.superview;
     if (superView) {
         [UIView animateWithDuration:0.3f animations:^{
-            [self arrangeWithinSuperView:superView];
+            [self arrangeWithinSuperView:superView shouldUpdateWidth:((UIDevice *)notification.object).orientation == UIDeviceOrientationPortrait ? NO: YES];
             [self setNeedsDisplay];
         }];
     } else {
@@ -447,9 +453,9 @@
     CGFloat initialAlpha = _preferences.animating.showInitialAlpha;
     CGFloat damping = _preferences.animating.springDamping;
     CGFloat velocity = _preferences.animating.springVelocity;
-    
+    self.parentView = superView;
     self.presentingView = view;
-    [self arrangeWithinSuperView:superView];
+    [self arrangeWithinSuperView:superView shouldUpdateWidth: [UIDevice currentDevice].orientation == UIDeviceOrientationPortrait? NO: YES] ;
     
     self.transform = initialTransform;
     self.alpha = initialAlpha;
@@ -509,7 +515,7 @@
     if (_dismissOverlay) {
         [_dismissOverlay removeFromSuperview];
     }
-
+    
     [UIView animateWithDuration:_preferences.animating.dismissDuration
                           delay:0
          usingSpringWithDamping:damping
@@ -532,3 +538,4 @@
 }
 
 @end
+
