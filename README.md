@@ -37,7 +37,7 @@ Drag drop Source folder in your project
 To integrate EasyTipView into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
-pod 'NMEasyTipView', '~> 1.0'
+pod 'NMEasyTipView', '~> 1.1'
 ```
 
 Then, run the following command:
