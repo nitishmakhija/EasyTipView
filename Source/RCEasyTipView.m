@@ -4,6 +4,13 @@
 //
 //  Created by Nitish Makhija on 16/12/16.
 //
+#define weakify(var) __weak typeof(var) AHKWeak_##var = var;
+
+#define strongify(var) \
+_Pragma("clang diagnostic push") \
+_Pragma("clang diagnostic ignored \"-Wshadow\"") \
+__strong typeof(var) var = AHKWeak_##var; \
+_Pragma("clang diagnostic pop")
 
 #import "RCEasyTipView.h"
 #import "UIView+RCEssentials.h"
@@ -215,7 +222,7 @@
             CGRect newFrame = [self computeFrameWithPosition:value.integerValue referenceFrame:refViewFrame superViewFrame:superViewFrame];
             if ([self isFrame:newFrame forReferenceViewFrame:refViewFrame]) {
                 if (position != Any) {
-                    NSLog(@"[EasyTipView - Info] The arrow position you chose %ld could not be applied. Instead, position <\(value)> has been applied! Please specify position ANY if you want EasyTipView to choose a position for you.", position);
+                    NSLog(@"[EasyTipView - Info] The arrow position you chose %ld could not be applied. Instead, position <\(value)> has been applied! Please specify position ANY if you want EasyTipView to choose a position for you.", (long)position);
                 }
                 frame = newFrame;
                 position = value.integerValue;
@@ -423,7 +430,9 @@
 - (void)handleRotation:(NSNotification *)notification {
     UIView *superView = self.superview;
     if (superView) {
+        weakify(self);
         [UIView animateWithDuration:0.3f animations:^{
+            strongify(self);
             [self arrangeWithinSuperView:superView shouldUpdateWidth:((UIDevice *)notification.object).orientation == UIDeviceOrientationPortrait ? NO: YES];
             [self setNeedsDisplay];
         }];
@@ -434,10 +443,12 @@
 
 - (void)handleTap:(UIGestureRecognizer *)gesture {
     if (gesture.state == UIGestureRecognizerStateEnded) {
+        weakify(self);
         [self dismissWithCompletion:^{
+            strongify(self);
             //remove all the gsture here
             [self removeGestureRecognizer:gesture];
-            [_dismissOverlay removeGestureRecognizer:gesture];
+            [self.dismissOverlay removeGestureRecognizer:gesture];
         }];
     }
 }
@@ -484,18 +495,21 @@
     _ID = [RCEasyTipViewIDGenerator getUniqueViewID];
     
     if (animated) {
+        weakify(self);
         [UIView animateWithDuration:_preferences.animating.showDuration
                               delay:0
              usingSpringWithDamping:damping
               initialSpringVelocity:velocity
                             options:UIViewAnimationOptionCurveEaseInOut
                          animations:^{
+                             strongify(self);
                              self.transform = finalTransform;
                              self.alpha = 1;
                          }
                          completion:^(BOOL finished) {
-                             if (_delegate && [_delegate respondsToSelector:@selector(didShowTip:)]) {
-                                 [_delegate didShowTip:self];
+                             strongify(self)
+                             if (self.delegate && [self.delegate respondsToSelector:@selector(didShowTip:)]) {
+                                 [self.delegate didShowTip:self];
                              }
                          }];
     }
@@ -515,22 +529,24 @@
     if (_dismissOverlay) {
         [_dismissOverlay removeFromSuperview];
     }
-    
+    weakify(self);
     [UIView animateWithDuration:_preferences.animating.dismissDuration
                           delay:0
          usingSpringWithDamping:damping
           initialSpringVelocity:velocity
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
-                         self.transform = _preferences.animating.dismissTransform;
-                         self.alpha = _preferences.animating.dismissFinalAlpha;
+                         strongify(self);
+                         self.transform = self.preferences.animating.dismissTransform;
+                         self.alpha = self.preferences.animating.dismissFinalAlpha;
                      }
                      completion:^(BOOL finished) {
+                         strongify(self);
                          if (completionBlock) {
                              completionBlock();
                          }
-                         if (_delegate && [_delegate respondsToSelector:@selector(didDismissTip:)]) {
-                             [_delegate didDismissTip:self];
+                         if (self.delegate && [self.delegate respondsToSelector:@selector(didDismissTip:)]) {
+                             [self.delegate didDismissTip:self];
                          }
                          [self removeFromSuperview];
                          self.transform = CGAffineTransformIdentity;
@@ -538,4 +554,3 @@
 }
 
 @end
-
