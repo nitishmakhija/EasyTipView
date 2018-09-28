@@ -392,7 +392,7 @@
     CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x + frame.size.width, frame.origin.y, frame.origin.x, frame.origin.y, radius);
     CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x, frame.origin.y, frame.origin.x, frame.origin.y + frame.size.height, radius);
     CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x, frame.origin.y + frame.size.height, frame.origin.x + frame.size.width, frame.origin.y + frame.size.height, radius);
-    CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x + frame.size.width, frame.origin.y + frame.size.height, frame.origin.x + frame.size.width, frame.origin.y + frame.size.height, radius);
+    CGPathAddArcToPoint(path, &CGAffineTransformIdentity, frame.origin.x + frame.size.width, frame.origin.y + frame.size.height, frame.origin.x + frame.size.width, frame.size.height, radius);
 }
 
 
@@ -506,7 +506,7 @@
     [self showAnimated:animated forView:view withinSuperView:superView];
 }
 
-- (void)dismissWithCompletion:(void (^)())completionBlock {
+- (void)dismissWithCompletion:(void (^)(void))completionBlock {
     CGFloat damping = _preferences.animating.springDamping;
     CGFloat velocity = _preferences.animating.springVelocity;
     if (_delegate && [_delegate respondsToSelector:@selector(willDismissTip:)]) {

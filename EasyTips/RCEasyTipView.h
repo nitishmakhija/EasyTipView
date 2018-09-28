@@ -140,7 +140,7 @@ typedef NS_ENUM(NSInteger, ArrowPosition){
  
  @param completionBlock Completion block to be executed after the EasyTipView is dismissed.
  */
-- (void)dismissWithCompletion:(void (^)())completionBlock;
+- (void)dismissWithCompletion:(void (^)(void))completionBlock;
 @end
 
 @protocol RCEasyTipViewDelegate <NSObject>
